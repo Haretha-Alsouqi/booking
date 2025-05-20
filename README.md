@@ -48,3 +48,5 @@ php artisan serve --port=8000
 Run Frontend: 
 
 npm run dev
+
+Note: Sign up user from backend then you can use that user to login from frontend
