@@ -8,6 +8,7 @@
     </div>
 
     <button
+      v-if="!userPage"
       @click="$emit('book', event.id)"
       :disabled="loading || !event.is_available"
       class="mt-2 bg-blue-600 text-white px-4 py-2 rounded"
@@ -18,6 +19,6 @@
 </template>
 
 <script setup>
-defineProps(['event', 'loading'])
+defineProps(['event', 'loading', 'userPage'])
 defineEmits(['book'])
 </script>

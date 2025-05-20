@@ -1,13 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import LoginView from '@/views/LoginView.vue'
 import EventList from '@/views/EventList.vue'
-import { useAuthStore } from '@/stores/auth'
+import UserBookings from "@/views/UserBookings.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/', component: EventList },
     { path: '/login', component: LoginView },
+    { path: '/bookings', component: UserBookings, meta: { requiresAuth: true } },
   ],
 })
 

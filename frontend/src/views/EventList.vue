@@ -1,22 +1,34 @@
 <template>
-  <div class="p-4">
-    <h1 class="text-2xl font-bold mb-4">Events</h1>
+  <div class="flex flex-col gap-10">
+    <div class="flex justify-between">
+      <router-link v-if="!auth.isLoggedIn" to="/login" class="cursor-pointer">
+        <button class="cursor-pointer">Login</button>
+      </router-link>
 
-    <div v-if="loading">Loading events...</div>
-    <div v-if="error" class="text-red-500">{{ error }}</div>
+      <router-link v-if="auth.isLoggedIn" to="/bookings">
+        <button class="cursor-pointer">My Bookings</button>
+      </router-link>
 
-    <div class="flex flex-col gap-5">
-      <EventCard
-        v-for="event in events"
-        :key="event.id"
-        :event="event"
-        @book="bookEvent"
-        :loading="booking[event.id]"
-      />
+      <button v-if="auth.isLoggedIn" @click="logout" class="mb-4 text-sm cursor-pointer">Logout</button>
+    </div>
+
+    <div>
+      <h1 class="text-2xl font-bold mb-4">Events</h1>
+
+      <div v-if="loading">Loading events...</div>
+      <div v-if="error" class="text-red-500">{{ error }}</div>
+
+      <div class="flex flex-col gap-5">
+        <EventCard
+          v-for="event in events"
+          :key="event.id"
+          :event="event"
+          @book="bookEvent"
+          :loading="booking[event.id]"
+        />
+      </div>
     </div>
   </div>
-
-  <button v-if="auth.isLoggedIn" @click="logout" class="mb-4 text-sm underline">Logout</button>
 </template>
 
 <script setup>
@@ -52,7 +64,7 @@ const bookEvent = async (eventId) => {
 
   booking.value[eventId] = true
   try {
-    await api.post('/bookings', {'event_id' : eventId})
+    await api.post('/bookings', {'event_id': eventId})
     alert('Booking successful!')
   } catch (err) {
     alert('Booking failed.')
