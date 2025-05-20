@@ -12,7 +12,7 @@ Base URL: http://localhost:8000/api
 
 
 Database Schema:
-
+```sql
 model User {
   id        Int      @id @default(autoincrement())
   name      String
@@ -39,6 +39,7 @@ model Bookings {
   event_id       Int      @unique
   created_at DateTime @default(now())
 }
+```
 
 Run Backend:
 
