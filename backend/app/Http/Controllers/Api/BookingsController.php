@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Interfaces\BookingsRepositoryInterface;
@@ -20,9 +21,11 @@ class BookingsController extends Controller
      */
     public function index(Request $request)
     {
-        $user = $request->user();
+        $user_id = $request->user()->id;
 
-        return response()->json($user->bookings);
+        $bookings = Booking::where('user_id', $user_id)->with('event')->get();
+
+        return response()->json($bookings);
     }
 
     /**
