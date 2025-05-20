@@ -48,7 +48,7 @@ const auth = useAuthStore()
 const fetchEvents = async () => {
   try {
     const res = await api.get('/events')
-    events.value = res.data
+    events.value = res.data.data
   } catch (e) {
     error.value = 'Failed to load events'
   } finally {
