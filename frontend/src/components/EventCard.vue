@@ -5,9 +5,13 @@
       <p>Date: {{ event.date }}</p>
     </div>
 
-    <div>
+    <div v-if="event.discount">
       <p v-if="event.discount.discount_percent">Discount: %{{ event.discount.discount_percent }}</p>
       <p>Price: {{ event.discount.discounted_price }}</p>
+    </div>
+
+    <div v-if="!event.discount">
+      <p>Price: {{ event.price }}</p>
     </div>
 
     <button
@@ -20,7 +24,7 @@
     </button>
 
     <button
-      v-if="!event.available"
+      v-if="!userPage && !event.available"
       :disabled="true"
       class="mt-2 bg-red-600 text-white px-4 py-2 rounded"
     >
