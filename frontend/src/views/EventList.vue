@@ -5,22 +5,24 @@
     <div v-if="loading">Loading events...</div>
     <div v-if="error" class="text-red-500">{{ error }}</div>
 
-    <EventCard
-      v-for="event in events"
-      :key="event.id"
-      :event="event"
-      @book="bookEvent"
-      :loading="booking[event.id]"
-    />
+    <div class="flex flex-col gap-5">
+      <EventCard
+        v-for="event in events"
+        :key="event.id"
+        :event="event"
+        @book="bookEvent"
+        :loading="booking[event.id]"
+      />
+    </div>
   </div>
 
   <button v-if="auth.isLoggedIn" @click="logout" class="mb-4 text-sm underline">Logout</button>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-import { useRouter } from 'vue-router'
+import {ref, onMounted} from 'vue'
+import {useAuthStore} from '@/stores/auth'
+import {useRouter} from 'vue-router'
 import api from '@/api'
 import EventCard from '@/components/EventCard.vue'
 
@@ -50,7 +52,7 @@ const bookEvent = async (eventId) => {
 
   booking.value[eventId] = true
   try {
-    await api.post('/bookings', { eventId })
+    await api.post('/bookings', {'event_id' : eventId})
     alert('Booking successful!')
   } catch (err) {
     alert('Booking failed.')
